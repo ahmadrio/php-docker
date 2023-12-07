@@ -20,7 +20,7 @@ RUN apt update && apt dist-upgrade -y \
         php7.1-sybase \
 # SQL Server 2017 Extensions
     && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    && curl https://packages.microsoft.com/config/debian/10/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
+    && curl https://packages.microsoft.com/config/debian/9/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
     && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql17 mssql-tools \
     && pecl install -f sqlsrv \
     && pecl install -f pdo_sqlsrv \
@@ -46,6 +46,15 @@ RUN apt update && apt dist-upgrade -y \
 
 # FILES (it overrides originals)
 ADD ./conf.d/custom.ini ${PHP_MODS_DIR}/custom.ini
+RUN ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_CLI_CONF_DIR}/991-custom.ini && \
+    ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_CGI_CONF_DIR}/991-custom.ini && \
+    ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_FPM_CONF_DIR}/991-custom.ini && \
+    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_CLI_CONF_DIR}/20-sqlsrv.ini && \
+    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_CGI_CONF_DIR}/20-sqlsrv.ini && \
+    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_FPM_CONF_DIR}/20-sqlsrv.ini && \
+    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_CLI_CONF_DIR}/30-pdo_sqlsrv.ini && \
+    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_CGI_CONF_DIR}/30-pdo_sqlsrv.ini && \
+    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_FPM_CONF_DIR}/30-pdo_sqlsrv.ini
 
 # Global Config for GIT
 ARG GIT_USER_NAME
@@ -55,6 +64,8 @@ RUN git config --global user.name "${GIT_USER_NAME}"
 RUN git config --global user.email "${GIT_USER_EMAIL}"
 RUN echo .DS_Store >> ~/.gitignore_global
 RUN git config --global core.excludesfile ~/.gitignore_global
+
+COPY ./conf.d/openssl.cnf /etc/ssl/openssl.cnf
 
 # Aliases
 RUN echo 'alias art="php artisan"' >> ~/.bashrc \
