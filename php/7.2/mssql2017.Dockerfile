@@ -1,4 +1,4 @@
-FROM dockette/php:7.1-fpm
+FROM dockette/php:7.2-fpm
 
 ARG TIMEZONE=Asia/Jakarta
 ARG NODE_VERSION=16
@@ -16,16 +16,16 @@ RUN apt update && apt dist-upgrade -y \
     && apt install -y nodejs \
 # PHP extensions
     && apt install -y \
-        php7.1-dev \
-        php7.1-sybase \
+        php7.2-dev \
+        php7.2-sybase \
 # SQL Server 2017 Extensions
     && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
     && curl https://packages.microsoft.com/config/debian/9/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
     && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql17 mssql-tools \
     && pecl install -f sqlsrv \
     && pecl install -f pdo_sqlsrv \
-    && printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/7.1/mods-available/sqlsrv.ini \
-    && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/7.1/mods-available/pdo_sqlsrv.ini \
+    && printf "; priority=20\nextension=sqlsrv.so\n" > ${PHP_MODS_DIR}/sqlsrv.ini \
+    && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > ${PHP_MODS_DIR}/pdo_sqlsrv.ini \
 # PHP Snappy
     && git clone --recursive --depth=1 https://github.com/kjdev/php-ext-snappy.git \
     && cd php-ext-snappy \

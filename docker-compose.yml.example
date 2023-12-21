@@ -4,15 +4,17 @@ services:
     php:
         build:
             context: "./php/${PHP_VERSION}"
-            dockerfile: Dockerfile
+            dockerfile: "${DATA_SOURCE:-mysql}.Dockerfile"
             args:
                 PHP_VERSION: ${PHP_VERSION}
                 NODE_VERSION: ${NODE_VERSION}
                 COMPOSER_VERSION: ${COMPOSER_VERSION}
                 TIMEZONE: ${TIMEZONE}
                 GIT_USER_NAME: ${GIT_USER_NAME:-johndoe}
-                GIT_USER_EMAIL: ${GIT_USER_EMAIL:-johndoe@example.com}
+                GIT_USER_EMAIL: ${GIT_USER_EMAIL:-johndoe@gmail.com}
         image: "php-${PHP_VERSION}"
+        environment:
+            - TZ=${TIMEZONE}
         depends_on:
             - "${DATA_SOURCE:-mysql}"
         ports:
