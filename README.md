@@ -5,7 +5,7 @@ Workspace docker ini bertujuan untuk mempermudah teman-teman untuk develop proje
 ## Preferensi:
 
 - Docker (rekomendasi versi 4.18.0)
-- PHP (7.1, 8.1, ...)
+- PHP (7.1, 7.2, 7.3, 7.4, 8.1)
 - Composer
 - NodeJS
 - MySQL
@@ -15,7 +15,12 @@ Workspace docker ini bertujuan untuk mempermudah teman-teman untuk develop proje
 
 ```
 |--- Sites/
-|    |--- projek-laravel/
+|    |--- projek-1-php71/
+|    |    |--- app/
+|    |    |--- bootstrap/
+|    |    |--- config/
+|    |    |--- ...
+|    |--- projek-2-php73/
 |    |    |--- app/
 |    |    |--- bootstrap/
 |    |    |--- config/
@@ -123,4 +128,4 @@ ngrok:
 
 ## Kontribusi:
 
-Silakan bantu saya untuk mengembangkan workspace docker-compose ini, nama Anda akan saya cantumkan pada section konstribusi pengembangan repository ini. terimakasih.
+Silakan bantu saya untuk mengembangkan versi php workspace di docker-compose ini. terimakasih.
