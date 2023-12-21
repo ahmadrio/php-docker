@@ -1,12 +1,12 @@
 FROM dockette/debian:bullseye
 
 # PHP
-ENV PHP_MODS_DIR=/etc/php/8.1/mods-available
-ENV PHP_CLI_DIR=/etc/php/8.1/cli
+ENV PHP_MODS_DIR=/etc/php/8.3/mods-available
+ENV PHP_CLI_DIR=/etc/php/8.3/cli
 ENV PHP_CLI_CONF_DIR=${PHP_CLI_DIR}/conf.d
-ENV PHP_CGI_DIR=/etc/php/8.1/cgi
+ENV PHP_CGI_DIR=/etc/php/8.3/cgi
 ENV PHP_CGI_CONF_DIR=${PHP_CGI_DIR}/conf.d
-ENV PHP_FPM_DIR=/etc/php/8.1/fpm
+ENV PHP_FPM_DIR=/etc/php/8.3/fpm
 ENV PHP_FPM_CONF_DIR=${PHP_FPM_DIR}/conf.d
 ENV PHP_FPM_POOL_DIR=${PHP_FPM_DIR}/pool.d
 ENV TZ=Asia/Jakarta
@@ -21,33 +21,33 @@ RUN apt update && apt dist-upgrade -y && \
     apt update && \
     apt dist-upgrade -y && \
     apt install -y --no-install-recommends \
-        # not available in bullseye: php8.1-apc \
-        php8.1-apcu \
-        php8.1-bz2 \
-        php8.1-bcmath \
-        php8.1-calendar \
-        php8.1-cli \
-        php8.1-cgi \
-        php8.1-ctype \
-        php8.1-curl \
-        php8.1-fpm \
-        php8.1-gettext \
-        php8.1-gd \
-        php8.1-intl \
-        php8.1-imap \
-        php8.1-ldap \
-        php8.1-mbstring \
-        php8.1-memcached \
-        # not available in bullseye: php8.1-mongo \
-        php8.1-mysql \
-        php8.1-pdo \
-        php8.1-pgsql \
-        php8.1-redis \
-        php8.1-soap \
-        php8.1-sqlite3 \
-        php8.1-zip \
-        php8.1-xmlrpc \
-        php8.1-xsl && \
+        # not available in bullseye: php8.3-apc \
+        php8.3-apcu \
+        php8.3-bz2 \
+        php8.3-bcmath \
+        php8.3-calendar \
+        php8.3-cli \
+        php8.3-cgi \
+        php8.3-ctype \
+        php8.3-curl \
+        php8.3-fpm \
+        php8.3-gettext \
+        php8.3-gd \
+        php8.3-intl \
+        php8.3-imap \
+        php8.3-ldap \
+        php8.3-mbstring \
+        php8.3-memcached \
+        # not available in bullseye: php8.3-mongo \
+        php8.3-mysql \
+        php8.3-pdo \
+        php8.3-pgsql \
+        php8.3-redis \
+        php8.3-soap \
+        php8.3-sqlite3 \
+        php8.3-zip \
+        php8.3-xmlrpc \
+        php8.3-xsl && \
     # COMPOSER #################################################################
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --2 && \
     # PHP MOD(s) ###############################################################
@@ -83,12 +83,12 @@ RUN apt update && apt dist-upgrade -y \
     && apt install -y nodejs \
 # PHP extensions
     && apt update && apt dist-upgrade -y && apt install -y \
-        php8.1-dev \
-        php8.1-sybase \
-# SQL Server 2017 Extensions
+        php8.3-dev \
+        php8.3-sybase \
+# SQL Server 2019 Extensions
     && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    && curl https://packages.microsoft.com/config/debian/9/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
-    && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql17 mssql-tools \
+    && curl https://packages.microsoft.com/config/debian/11/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
+    && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql18 mssql-tools \
     && pecl install -f sqlsrv \
     && pecl install -f pdo_sqlsrv \
     && printf "; priority=20\nextension=sqlsrv.so\n" > ${PHP_MODS_DIR}/sqlsrv.ini \
@@ -139,4 +139,4 @@ RUN echo 'alias art="php artisan"' >> ~/.bashrc \
     && echo 'alias serve="php artisan serve --host=0.0.0.0 --port=80"' >> ~/.bashrc
 # END CUSTOMIZE
 
-CMD ["php-fpm8.1"]
+CMD ["php-fpm8.3"]

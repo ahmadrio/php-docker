@@ -85,14 +85,6 @@ RUN apt update && apt dist-upgrade -y \
     && apt update && apt dist-upgrade -y && apt install -y \
         php8.1-dev \
         php8.1-sybase \
-# SQL Server 2017 Extensions
-    && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    && curl https://packages.microsoft.com/config/debian/9/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
-    && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql17 mssql-tools \
-    && pecl install -f sqlsrv \
-    && pecl install -f pdo_sqlsrv \
-    && printf "; priority=20\nextension=sqlsrv.so\n" > ${PHP_MODS_DIR}/sqlsrv.ini \
-    && printf "; priority=30\nextension=pdo_sqlsrv.so\n" > ${PHP_MODS_DIR}/pdo_sqlsrv.ini \
 # PHP Snappy
     && git clone --recursive --depth=1 https://github.com/kjdev/php-ext-snappy.git \
     && cd php-ext-snappy \
@@ -124,13 +116,7 @@ RUN git config --global core.excludesfile ~/.gitignore_global
 ADD ./conf.d/custom.ini ${PHP_MODS_DIR}/custom.ini
 RUN ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_CLI_CONF_DIR}/991-custom.ini && \
     ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_CGI_CONF_DIR}/991-custom.ini && \
-    ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_FPM_CONF_DIR}/991-custom.ini && \
-    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_CLI_CONF_DIR}/20-sqlsrv.ini && \
-    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_CGI_CONF_DIR}/20-sqlsrv.ini && \
-    ln -s ${PHP_MODS_DIR}/sqlsrv.ini ${PHP_FPM_CONF_DIR}/20-sqlsrv.ini && \
-    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_CLI_CONF_DIR}/30-pdo_sqlsrv.ini && \
-    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_CGI_CONF_DIR}/30-pdo_sqlsrv.ini && \
-    ln -s ${PHP_MODS_DIR}/pdo_sqlsrv.ini ${PHP_FPM_CONF_DIR}/30-pdo_sqlsrv.ini
+    ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_FPM_CONF_DIR}/991-custom.ini
 
 COPY ./conf.d/openssl.cnf /etc/ssl/openssl.cnf
 

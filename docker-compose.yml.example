@@ -53,6 +53,19 @@ services:
         networks:
             - pace
 
+    mssql2022:
+        image: "mcr.microsoft.com/mssql/server:${MSSQL_VERSION}-latest"
+        environment:
+            - SA_PASSWORD=${MSSQL_PASSWORD}
+            - ACCEPT_EULA=Y
+            - TZ=${TIMEZONE}
+        volumes:
+            - database-mssql-2022:/var/opt/mssql
+        ports:
+            - "${MSSQL_PORT:-1433}:1433"
+        networks:
+            - pace
+
     mysql:
         image: "mysql:${MYSQL_VERSION}"
         environment:
@@ -99,6 +112,8 @@ volumes:
     database-mssql-2017:
         driver: local
     database-mssql-2019:
+        driver: local
+    database-mssql-2022:
         driver: local
     database-mysql:
         driver: local

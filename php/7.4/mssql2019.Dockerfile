@@ -18,7 +18,7 @@ RUN apt update && apt dist-upgrade -y \
     && apt install -y \
         php7.4-dev \
         php7.4-sybase \
-# SQL Server 2017 Extensions
+# SQL Server 2019 Extensions
     && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
     && curl https://packages.microsoft.com/config/debian/11/prod.list | tee /etc/apt/sources.list.d/mssql-release.list \
     && apt update && ACCEPT_EULA=Y apt install -y unixodbc-dev msodbcsql18 mssql-tools \

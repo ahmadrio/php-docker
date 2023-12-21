@@ -5,7 +5,7 @@ Workspace docker ini bertujuan untuk mempermudah teman-teman untuk develop proje
 ## Preferensi:
 
 - Docker (rekomendasi versi 4.18.0)
-- PHP (7.1, 7.2, 7.3, 7.4, 8.1)
+- PHP (7.1, 7.2, 7.3, 7.4, 8.1, 8.3)
 - Composer
 - NodeJS
 - MySQL
