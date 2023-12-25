@@ -111,6 +111,9 @@ RUN apt update && apt dist-upgrade -y \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
+# Yarn
+RUN npm install --global -y yarn
+
 # Global Config for GIT
 ARG GIT_USER_NAME
 ARG GIT_USER_EMAIL
