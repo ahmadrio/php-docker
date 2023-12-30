@@ -80,7 +80,8 @@ RUN apt update && apt dist-upgrade -y \
     && mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && apt install -y nodejs \
+    && apt install -y nodejs npm \
+    && npm install -g yarn \
 # PHP extensions
     && apt update && apt dist-upgrade -y && apt install -y \
         php8.3-dev \
@@ -110,9 +111,6 @@ RUN apt update && apt dist-upgrade -y \
     && apt-get remove -y curl \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
-
-# Yarn
-RUN npm install --global -y yarn
 
 # Global Config for GIT
 ARG GIT_USER_NAME

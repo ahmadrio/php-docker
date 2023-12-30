@@ -13,7 +13,8 @@ RUN apt update && apt dist-upgrade -y \
     && mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && apt install -y nodejs \
+    && apt install -y nodejs npm \
+    && npm install -g yarn \
 # PHP extensions
     && apt install -y \
         php7.2-dev \
