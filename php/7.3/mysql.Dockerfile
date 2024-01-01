@@ -7,7 +7,7 @@ ARG COMPOSER_VERSION=1
 RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone
 
 RUN apt update && apt dist-upgrade -y \
-    && apt install -y wkhtmltopdf \
+    && apt install -y wkhtmltopdf libpng-dev \
 # NodeJS installation
     && apt install -y ca-certificates curl gnupg \
     && mkdir -p /etc/apt/keyrings \
