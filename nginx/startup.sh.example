@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Edit this to your needs
+if [ ! -f /etc/nginx/ssl/laravel.crt ]; then
+    mkcert -cert-file /etc/nginx/ssl/laravel.crt \
+        -key-file /etc/nginx/ssl/laravel.key \
+        laravel.test
+    chmod 644 /etc/nginx/ssl/laravel.key
+fi
+
+# if [ ! -f /etc/nginx/ssl/newssl.crt ]; then
+#     openssl genrsa -out "/etc/nginx/ssl/newssl.key" 2048
+#     openssl req -new -key "/etc/nginx/ssl/newssl.key" -out "/etc/nginx/ssl/newssl.csr" -subj "/CN=newssl/O=newssl/C=UK"
+#     openssl x509 -req -days 365 -in "/etc/nginx/ssl/newssl.csr" -signkey "/etc/nginx/ssl/newssl.key" -out "/etc/nginx/ssl/newssl.crt"
+#     chmod 644 /etc/nginx/ssl/newssl.key
+# fi
+
+
+# cron job to restart nginx every 6 hour
+(crontab -l ; echo "0 0 */4 * * nginx -s reload") | crontab -
+
+# Start crond in background
+crond -l 2 -b
+
+
+#* * * * * root nginx -s reload >> /var/log/cron.log
+
+# Start nginx in foreground
+echo "NGINX started, daemon will restart every 6 hours now.";
+nginx

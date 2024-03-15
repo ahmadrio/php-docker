@@ -1,0 +1,8 @@
+mkcert -cert-file /etc/nginx/ssl/laravel.crt \
+    -key-file /etc/nginx/ssl/laravel.key \
+    laravel.test
+
+# openssl genrsa -out "./newssl.key" 2048
+# chmod 644 ./newssl.key
+# openssl req -new -key "./newssl.key" -out "./newssl.csr" -subj "/CN=newssl/O=newssl/C=UK"
+# openssl x509 -req -days 365 -in "./newssl.csr" -signkey "./newssl.key" -out "./newssl.crt"
